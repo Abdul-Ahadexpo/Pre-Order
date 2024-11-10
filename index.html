@@ -13,7 +13,7 @@
   <div id="checkout-page" class="max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
     <h1 class="text-2xl font-bold text-center mb-6">Checkout</h1>
     <p class="text-center mb-6"><i><strong>After</strong></i> <strong>Confirm Pre-Order</strong> Please click this <a
-        class="text-blue-200 underline" href="https://spinstrike.vercel.app/">Home</a> 👈</p>
+        class="text-blue-200 underline" href="https://spinstrike.vercel.app/index.html">Home</a> 👈</p>
 
     <!-- User Information Form -->
     <div id="user-info" class="mb-6">
@@ -31,17 +31,31 @@
           <label for="address" class="label">Address:</label>
           <input type="text" id="address" class="input input-bordered w-full bg-gray-700 text-white" required>
         </div>
+
         <div>
           <label for="email" class="label">Email:</label>
           <input type="email" id="email" class="input input-bordered w-full bg-gray-700 text-white" required>
         </div>
+
+        <div>
+          <label for="txid" class="label">Send Money With Bkash To this Number <br>
+            ~
+            01722786111
+            ~
+            <br>Put your bkash transaction id here:</label>
+          <input type="text" id="txid" class="input input-bordered w-full bg-gray-700 text-white"
+            placeholder="your bkash transaction id" required>
+        </div>
+
+
+
         <div>
           <label for="pre" class="label">What product do you want to Pre-order?</label>
           <input type="text" id="pre" class="input input-bordered w-full bg-gray-700 text-white" required
             placeholder="Write the name of the product you want to pre-order">
         </div>
 
-        <button type="submit" class="btn btn-primary w-full bg-blue-600 hover:bg-blue-700">Confirm Order</button>
+        <button type="submit" class="btn btn-primary w-full bg-blue-600 hover:bg-blue-700">Confirm Pre-Order</button>
       </form>
     </div>
 
@@ -61,9 +75,10 @@
       const address = document.getElementById("address").value;
       const email = document.getElementById("email").value;
       const pre = document.getElementById("pre").value;
+      const txid = document.getElementById("txid").value;
 
       // Check if all fields are filled
-      if (!name || !phone || !address || !email || !pre) {
+      if (!name || !phone || !address || !email || !pre || !txid) {
         alert("Please fill out all fields.");
         return;
       }
@@ -76,6 +91,7 @@
         address: address,
         email: email,
         pre_order: pre,
+        trans_id: txid,
       };
 
       // Send the data to the specified API
@@ -90,21 +106,14 @@
 
         if (response.ok) {
           alert(`Thank you for your order, ${name}! It has been confirmed.`);
-          localStorage.removeItem("cart"); // Optionally, clear the cart
-          cart = [];
-          loadCheckout(); // Reload checkout details
-        } else {
-          throw new Error("Failed to submit the form.");
+          localStorage.removeItem("cart");
         }
       } catch (error) {
         alert(error.message);
       }
     }
 
-    // Load checkout details when the page is loaded
-    window.onload = function () {
-      loadCheckout();
-    };
+
   </script>
 </body>
 
